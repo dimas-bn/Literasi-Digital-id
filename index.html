@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Literasi Digital Indonesia — Platform edukasi untuk menguasai ruang digital dengan cerdas, aman, dan etis.">
+  <title>Literasi Digital Indonesia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            space: { DEFAULT: '#0a0f1d', light: '#0b0e14' },
+            neon: { cyan: '#00f2fe', purple: '#7928ca', emerald: '#10b981' },
+            slate: { mode: '#1e293b', dark: '#0f172a' }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+            display: ['Inter', 'Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-space text-gray-100 font-sans antialiased overflow-x-hidden">
+
+  <!-- Particle Background -->
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+  <!-- Sticky Header -->
+  <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <nav class="glass-header mx-4 mt-4 rounded-2xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-18">
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center glow-cyan">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <span class="font-display font-bold text-lg hidden sm:block group-hover:text-neon-cyan transition-colors">Literasi Digital <span class="text-neon-cyan">ID</span></span>
+        </a>
+
+        <div class="hidden lg:flex items-center gap-1">
+          <a href="#definisi" class="nav-link" data-search="definisi pengertian">Definisi</a>
+          <a href="#pilar" class="nav-link" data-search="pilar kominfo skills safety">4 Pilar</a>
+          <a href="#checklist" class="nav-link" data-search="checklist assessment keamanan">Checklist</a>
+          <a href="#tujuan" class="nav-link" data-search="tujuan manfaat">Tujuan</a>
+          <a href="#tantangan" class="nav-link" data-search="tantangan hoaks cyberbullying">Tantangan</a>
+          <a href="#simulator" class="nav-link" data-search="hoaks kuis simulator">Simulator</a>
+          <a href="#kontak" class="nav-link" data-search="kontak form">Kontak</a>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button id="themeToggle" class="glass-btn p-2.5 rounded-xl" aria-label="Toggle theme">
+            <svg id="iconDark" class="w-5 h-5 text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+            <svg id="iconLight" class="w-5 h-5 text-neon-purple hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </button>
+          <button id="mobileMenuBtn" class="lg:hidden glass-btn p-2.5 rounded-xl" aria-label="Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="lg:hidden hidden pb-4 border-t border-white/5 mt-2 pt-3">
+        <div class="flex flex-col gap-1">
+          <a href="#definisi" class="mobile-nav-link">Definisi</a>
+          <a href="#pilar" class="mobile-nav-link">4 Pilar</a>
+          <a href="#checklist" class="mobile-nav-link">Checklist</a>
+          <a href="#tujuan" class="mobile-nav-link">Tujuan & Manfaat</a>
+          <a href="#tantangan" class="mobile-nav-link">Tantangan</a>
+          <a href="#simulator" class="mobile-nav-link">Simulator Hoaks</a>
+          <a href="#kontak" class="mobile-nav-link">Kontak</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-screen flex items-center pt-28 pb-16 px-4 sm:px-6 lg:px-8" data-search="hero literasi digital edukasi">
+      <div class="max-w-7xl mx-auto w-full">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div class="reveal-up">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-badge text-sm text-neon-cyan mb-6">
+              <span class="w-2 h-2 rounded-full bg-neon-cyan animate-pulse"></span>
+              Platform Edukasi Nasional
+            </span>
+            <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+              Menguasai Ruang Digital dengan
+              <span class="gradient-text"> Cerdas, Safe, & Etis</span>
+            </h1>
+            <p class="text-lg text-gray-400 leading-relaxed mb-8 max-w-xl">
+              Literasi digital bukan sekadar kemampuan teknis — melainkan kecakapan hidup modern untuk mengakses, mengevaluasi, berkomunikasi, dan berpartisipasi secara aman dan etis di ekosistem digital Indonesia.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="relative mb-8 max-w-xl">
+              <div class="glass-card rounded-2xl p-1 flex items-center glow-cyan-hover">
+                <svg class="w-5 h-5 text-neon-cyan ml-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input type="search" id="globalSearch" placeholder="Cari topik: hoaks, 2FA, netiket, privasi..." class="w-full bg-transparent px-4 py-3.5 text-sm outline-none placeholder-gray-500">
+                <button id="searchBtn" class="btn-primary mr-1 px-5 py-2.5 rounded-xl text-sm font-semibold">Cari</button>
+              </div>
+              <div id="searchResults" class="absolute top-full left-0 right-0 mt-2 glass-card rounded-xl hidden max-h-64 overflow-y-auto z-20"></div>
+            </div>
+
+            <div class="flex flex-wrap gap-4 mb-12">
+              <a href="#pilar" class="btn-primary px-6 py-3.5 rounded-xl font-semibold inline-flex items-center gap-2">
+                Jelajahi 4 Pilar
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+              <a href="#checklist" class="btn-secondary px-6 py-3.5 rounded-xl font-semibold">Cek Modul Edukasi</a>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 reveal-up delay-200">
+            <div class="stat-card glass-card rounded-2xl text-center glow-cyan-hover">
+              <div class="stat-value text-neon-cyan">
+                <span class="counter" data-target="2847500" data-suffix="+">0</span>
+              </div>
+              <div class="stat-label">Pengguna Terliterasi</div>
+            </div>
+            <div class="stat-card glass-card rounded-2xl text-center glow-purple-hover">
+              <div class="stat-value text-neon-purple">
+                <span class="counter" data-target="48">0</span>
+              </div>
+              <div class="stat-label">Modul Pembelajaran</div>
+            </div>
+            <div class="stat-card glass-card rounded-2xl text-center glow-emerald-hover">
+              <div class="stat-value text-neon-emerald">
+                <span class="counter" data-target="125000" data-suffix="+">0</span>
+              </div>
+              <div class="stat-label">Kasus Hoaks Terdeteksi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
+        <a href="#definisi" class="text-gray-500 hover:text-neon-cyan transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- DEFINISI -->
+    <section id="definisi" class="section-padding" data-search="definisi pengertian literasi digital unesco kemkominfo">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Pengertian & Definisi</span>
+          <h2 class="section-title">Apa Itu Literasi Digital?</h2>
+          <p class="section-desc max-w-3xl mx-auto">Literasi digital mencakup kemampuan mengakses, mengevaluasi, mencipta, dan berkomunikasi informasi secara etis dan aman di ruang digital.</p>
+        </div>
+
+        <!-- General Definition Cards -->
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+          <div class="def-card glass-card rounded-2xl p-6 reveal-up" data-search="akses informasi digital">
+            <div class="w-12 h-12 rounded-xl bg-neon-cyan/10 flex items-center justify-center mb-4"><span class="text-2xl">🔓</span></div>
+            <h3 class="font-semibold mb-2">Akses</h3>
+            <p class="text-sm text-gray-400">Kemampuan menemukan dan memperoleh informasi digital secara efektif dari berbagai sumber terpercaya.</p>
+          </div>
+          <div class="def-card glass-card rounded-2xl p-6 reveal-up delay-100" data-search="evaluasi kritis informasi">
+            <div class="w-12 h-12 rounded-xl bg-neon-purple/10 flex items-center justify-center mb-4"><span class="text-2xl">🔍</span></div>
+            <h3 class="font-semibold mb-2">Evaluasi</h3>
+            <p class="text-sm text-gray-400">Menilai kredibilitas, akurasi, dan relevansi informasi sebelum menyebarkannya.</p>
+          </div>
+          <div class="def-card glass-card rounded-2xl p-6 reveal-up delay-200" data-search="etika digital netiket">
+            <div class="w-12 h-12 rounded-xl bg-neon-emerald/10 flex items-center justify-center mb-4"><span class="text-2xl">⚖️</span></div>
+            <h3 class="font-semibold mb-2">Etika</h3>
+            <p class="text-sm text-gray-400">Berkomunikasi dan berinteraksi dengan hormat, tanggung jawab, dan integritas di ruang digital.</p>
+          </div>
+          <div class="def-card glass-card rounded-2xl p-6 reveal-up delay-300" data-search="keamanan digital privasi">
+            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center mb-4"><span class="text-2xl">🛡️</span></div>
+            <h3 class="font-semibold mb-2">Keamanan</h3>
+            <p class="text-sm text-gray-400">Melindungi data pribadi, identitas digital, dan perangkat dari ancaman siber.</p>
+          </div>
+        </div>
+
+        <!-- Expert Tabs -->
+        <div class="glass-card rounded-2xl p-6 sm:p-8 reveal-up">
+          <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+            <span class="w-1 h-6 bg-neon-cyan rounded-full"></span>
+            Definisi Menurut Ahli & Instansi
+          </h3>
+          <div class="flex flex-wrap gap-2 mb-6" id="expertTabs" role="tablist">
+            <button class="tab-btn active" data-tab="unesco" role="tab">UNESCO</button>
+            <button class="tab-btn" data-tab="kominfo" role="tab">Kemkominfo RI</button>
+            <button class="tab-btn" data-tab="kemdikbud" role="tab">Kemendikbudristek</button>
+            <button class="tab-btn" data-tab="gilster" role="tab">Paul Gilster</button>
+            <button class="tab-btn" data-tab="belshaw" role="tab">Doug Belshaw</button>
+            <button class="tab-btn" data-tab="ala" role="tab">ALA</button>
+            <button class="tab-btn" data-tab="jisc" role="tab">JISC</button>
+          </div>
+          <div id="expertContent" class="min-h-[120px]">
+            <div class="tab-panel active" data-panel="unesco">
+              <p class="text-gray-300 leading-relaxed">UNESCO mendefinisikan literasi digital sebagai kemampuan menggunakan teknologi informasi dan komunikasi (TIK) untuk menemukan, mengevaluasi, mencipta, dan berkomunikasi informasi, memerlukan pengetahuan kognitif dan teknis serta pemahaman sosial tentang ekosistem media.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="kominfo">
+              <p class="text-gray-300 leading-relaxed">Kementerian Komunikasi dan Informatika RI menekankan literasi digital sebagai penguasaan empat pilar: Kecakapan Digital, Keamanan Digital, Budaya Digital, dan Etika Digital — sebagai fondasi masyarakat digital yang produktif dan aman.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="kemdikbud">
+              <p class="text-gray-300 leading-relaxed">Kemendikbudristek RI mengintegrasikan literasi digital ke dalam kurikulum sebagai kompetensi abad 21, meliputi kemampuan berpikir kritis, kolaborasi, kreativitas, dan komunikasi di era digital.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="gilster">
+              <p class="text-gray-300 leading-relaxed">Paul Gilster (1997) memperkenalkan istilah "digital literacy" sebagai kemampuan memahami dan menggunakan informasi dari berbagai sumber digital — bukan hanya teknis, tetapi juga kemampuan evaluasi dan integrasi informasi.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="belshaw">
+              <p class="text-gray-300 leading-relaxed">Doug Belshaw mengembangkan framework 8 elemen literasi digital: Cultural, Cognitive, Constructive, Communicative, Confident, Creative, Critical, dan Civic — menekankan dimensi sosial dan partisipatif.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="ala">
+              <p class="text-gray-300 leading-relaxed">American Library Association (ALA) mendefinisikan literasi digital sebagai kemampuan menggunakan teknologi informasi dan internet untuk menemukan, mengevaluasi, mencipta, dan berkomunikasi informasi secara efektif dan etis.</p>
+            </div>
+            <div class="tab-panel hidden" data-panel="jisc">
+              <p class="text-gray-300 leading-relaxed">JISC (UK) menekankan literasi digital sebagai kemampuan hidup, belajar, dan bekerja di masyarakat digital — mencakup keamanan online, kesejahteraan digital, dan penggunaan teknologi secara produktif.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 PILAR -->
+    <section id="pilar" class="section-padding bg-space-light/50" data-search="pilar kominfo skills safety culture ethics">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Kerangka Nasional</span>
+          <h2 class="section-title">4 Pilar Literasi Digital</h2>
+          <p class="section-desc max-w-2xl mx-auto">Kerangka empat pilar Kemkominfo RI sebagai fondasi literasi digital Indonesia. Klik setiap kartu untuk detail implementasi.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <button class="pilar-card glass-card rounded-2xl p-6 text-left reveal-up glow-cyan-hover" data-pilar="skills">
+            <div class="pilar-icon bg-gradient-to-br from-neon-cyan/20 to-neon-cyan/5 mb-4">💻</div>
+            <h3 class="font-bold text-lg mb-2">Digital Skills</h3>
+            <p class="text-sm text-gray-400 mb-4">Kecakapan Digital — menguasai alat dan platform digital.</p>
+            <span class="text-neon-cyan text-sm font-medium inline-flex items-center gap-1">Pelajari lebih lanjut →</span>
+          </button>
+          <button class="pilar-card glass-card rounded-2xl p-6 text-left reveal-up delay-100 glow-purple-hover" data-pilar="safety">
+            <div class="pilar-icon bg-gradient-to-br from-neon-purple/20 to-neon-purple/5 mb-4">🔐</div>
+            <h3 class="font-bold text-lg mb-2">Digital Safety</h3>
+            <p class="text-sm text-gray-400 mb-4">Keamanan Digital — melindungi diri dari ancaman siber.</p>
+            <span class="text-neon-purple text-sm font-medium inline-flex items-center gap-1">Pelajari lebih lanjut →</span>
+          </button>
+          <button class="pilar-card glass-card rounded-2xl p-6 text-left reveal-up delay-200 glow-emerald-hover" data-pilar="culture">
+            <div class="pilar-icon bg-gradient-to-br from-neon-emerald/20 to-neon-emerald/5 mb-4">🌐</div>
+            <h3 class="font-bold text-lg mb-2">Digital Culture</h3>
+            <p class="text-sm text-gray-400 mb-4">Budaya Digital — berpartisipasi positif dalam ekosistem digital.</p>
+            <span class="text-neon-emerald text-sm font-medium inline-flex items-center gap-1">Pelajari lebih lanjut →</span>
+          </button>
+          <button class="pilar-card glass-card rounded-2xl p-6 text-left reveal-up delay-300 glow-cyan-hover" data-pilar="ethics">
+            <div class="pilar-icon bg-gradient-to-br from-amber-500/20 to-amber-500/5 mb-4">📜</div>
+            <h3 class="font-bold text-lg mb-2">Digital Ethics</h3>
+            <p class="text-sm text-gray-400 mb-4">Etika Digital — bertindak jujur, adil, dan bertanggung jawab.</p>
+            <span class="text-amber-400 text-sm font-medium inline-flex items-center gap-1">Pelajari lebih lanjut →</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKLIST -->
+    <section id="checklist" class="section-padding" data-search="checklist assessment keamanan etika self assessment 2FA privasi">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Self-Assessment</span>
+          <h2 class="section-title">Checklist Literasi Digital Sehari-hari</h2>
+          <p class="section-desc">Centang perilaku digital yang sudah Anda lakukan. Dapatkan skor Tingkat Keamanan & Etika Digital Anda.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 sm:p-8 reveal-up">
+          <div id="checklistItems" class="space-y-3 mb-8"></div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/5">
+            <div class="text-center sm:text-left">
+              <div class="text-sm text-gray-400 mb-1">Skor Anda</div>
+              <div id="checklistScore" class="text-3xl font-bold text-neon-cyan">0%</div>
+              <div id="checklistLabel" class="text-sm text-gray-500 mt-1">Belum dinilai</div>
+            </div>
+            <div class="w-full sm:w-48">
+              <div class="h-3 bg-white/5 rounded-full overflow-hidden">
+                <div id="checklistProgress" class="h-full bg-gradient-to-r from-neon-cyan to-neon-emerald rounded-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+            </div>
+            <button id="resetChecklist" class="btn-secondary px-5 py-2.5 rounded-xl text-sm">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TUJUAN & MANFAAT -->
+    <section id="tujuan" class="section-padding bg-space-light/50" data-search="tujuan manfaat literasi digital kerja hoaks pemilu">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Mengapa Penting?</span>
+          <h2 class="section-title">Tujuan & Manfaat Literasi Digital</h2>
+        </div>
+
+        <div class="flex justify-center gap-2 mb-8">
+          <button class="tab-btn active" data-carousel="tujuan">8 Tujuan Utama</button>
+          <button class="tab-btn" data-carousel="manfaat">10 Manfaat</button>
+        </div>
+
+        <div class="relative overflow-hidden">
+          <div id="carouselTujuan" class="carousel-track">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Generated by JS -->
+            </div>
+          </div>
+          <div id="carouselManfaat" class="carousel-track hidden">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <!-- Generated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-3 mt-8">
+          <button id="carouselPrev" class="glass-btn p-3 rounded-xl" aria-label="Previous">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div id="carouselDots" class="flex items-center gap-2"></div>
+          <button id="carouselNext" class="glass-btn p-3 rounded-xl" aria-label="Next">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TANTANGAN -->
+    <section id="tantangan" class="section-padding" data-search="tantangan hoaks cyberbullying 3T kesenjangan digital indonesia">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-start">
+          <div class="reveal-up">
+            <span class="section-tag">Konteks Indonesia</span>
+            <h2 class="section-title text-left">Tantangan Digital di Indonesia</h2>
+            <p class="text-gray-400 mb-8">10 tantangan utama yang dihadapi masyarakat Indonesia dalam era digital, beserta solusi actionable.</p>
+
+            <!-- Radar Chart -->
+            <div class="glass-card rounded-2xl p-6 flex justify-center">
+              <canvas id="radarChart" width="320" height="320"></canvas>
+            </div>
+          </div>
+
+          <div class="space-y-3 reveal-up delay-200" id="tantanganAccordion"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMULATOR -->
+    <section id="simulator" class="section-padding bg-space-light/50" data-search="hoaks kuis simulator penipuan online deteksi">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Mini Tool</span>
+          <h2 class="section-title">Simulator Hoaks & Safety</h2>
+          <p class="section-desc">Uji Kemampuan Deteksi Hoaks & Penipuan Online — 3 soal interaktif dengan umpan balik langsung.</p>
+        </div>
+
+        <div class="glass-card rounded-2xl p-6 sm:p-8 reveal-up">
+          <div id="quizContainer">
+            <div id="quizProgress" class="flex gap-2 mb-8">
+              <div class="quiz-dot active"></div>
+              <div class="quiz-dot"></div>
+              <div class="quiz-dot"></div>
+            </div>
+            <div id="quizContent"></div>
+          </div>
+          <div id="quizResult" class="hidden text-center py-8">
+            <div id="quizScoreDisplay" class="text-5xl font-bold gradient-text mb-4"></div>
+            <p id="quizFeedback" class="text-gray-300 mb-6"></p>
+            <button id="quizRestart" class="btn-primary px-6 py-3 rounded-xl font-semibold">Ulangi Kuis</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="kontak" class="section-padding" data-search="kontak form masukan feedback">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal-up">
+          <span class="section-tag">Hubungi Kami</span>
+          <h2 class="section-title">Form Masukan & Kontak</h2>
+          <p class="section-desc">Punya pertanyaan atau saran? Kirimkan pesan Anda.</p>
+        </div>
+
+        <form id="contactForm" class="glass-card rounded-2xl p-6 sm:p-8 reveal-up space-y-5" novalidate>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label for="name" class="block text-sm font-medium mb-2">Nama Lengkap</label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="Masukkan nama" required>
+              <span class="error-msg hidden text-red-400 text-xs mt-1">Nama wajib diisi (min. 2 karakter)</span>
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium mb-2">Email</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="email@contoh.com" required>
+              <span class="error-msg hidden text-red-400 text-xs mt-1">Email tidak valid</span>
+            </div>
+          </div>
+          <div>
+            <label for="subject" class="block text-sm font-medium mb-2">Subjek</label>
+            <select id="subject" name="subject" class="form-input" required>
+              <option value="">Pilih subjek</option>
+              <option value="edukasi">Pertanyaan Edukasi</option>
+              <option value="kerjasama">Kerjasama Institusi</option>
+              <option value="laporan">Laporan Hoaks/Konten</option>
+              <option value="lainnya">Lainnya</option>
+            </select>
+            <span class="error-msg hidden text-red-400 text-xs mt-1">Pilih subjek pesan</span>
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium mb-2">Pesan</label>
+            <textarea id="message" name="message" rows="4" class="form-input resize-none" placeholder="Tulis pesan Anda..." required></textarea>
+            <span class="error-msg hidden text-red-400 text-xs mt-1">Pesan wajib diisi (min. 10 karakter)</span>
+          </div>
+          <button type="submit" class="btn-primary w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold">Kirim Pesan</button>
+          <div id="formSuccess" class="hidden p-4 rounded-xl bg-neon-emerald/10 border border-neon-emerald/30 text-neon-emerald text-sm">
+            ✓ Pesan berhasil dikirim! Terima kasih atas masukan Anda.
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/5 bg-space-light/80 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+        <div class="sm:col-span-2 lg:col-span-1">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center">
+              <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <span class="font-bold text-lg">Literasi Digital ID</span>
+          </div>
+          <p class="text-sm text-gray-400 leading-relaxed">Investasi kolektif dalam literasi digital adalah fondasi Indonesia Emas 2045. Bersama, kita wujudkan masyarakat digital yang cerdas, aman, dan etis.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-neon-cyan">Navigasi</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#definisi" class="footer-link">Definisi</a></li>
+            <li><a href="#pilar" class="footer-link">4 Pilar</a></li>
+            <li><a href="#checklist" class="footer-link">Checklist</a></li>
+            <li><a href="#simulator" class="footer-link">Simulator Hoaks</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-neon-purple">Sumber Daya</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#tujuan" class="footer-link">Tujuan & Manfaat</a></li>
+            <li><a href="#tantangan" class="footer-link">Tantangan Digital</a></li>
+            <li><a href="#kontak" class="footer-link">Hubungi Kami</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-neon-emerald">Sosial Media</h4>
+          <div class="flex gap-3">
+            <a href="#" class="social-icon" aria-label="Twitter/X"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="#" class="social-icon" aria-label="Instagram"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="#" class="social-icon" aria-label="YouTube"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+        <p>&copy; 2026 Literasi Digital Indonesia. All rights reserved.</p>
+        <p>Dibangun untuk edukasi masyarakat digital Indonesia 🇮🇩</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Pilar Modal -->
+  <div id="pilarModal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-content glass-card rounded-2xl max-w-lg w-full mx-4 p-6 sm:p-8 relative">
+      <button id="closeModal" class="absolute top-4 right-4 glass-btn p-2 rounded-lg" aria-label="Tutup">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
